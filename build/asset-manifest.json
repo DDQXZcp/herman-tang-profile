@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.40df3699.css",
-    "main.js": "/static/js/main.3737098b.js",
+    "main.css": "/static/css/main.f7219e66.css",
+    "main.js": "/static/js/main.4ecef559.js",
     "static/media/CSIRO_Lab.jpg": "/static/media/CSIRO_Lab.1ab09d084f33c39be731.jpg",
     "static/media/Hello.gif": "/static/media/Hello.d93720933c608f6178fb.gif",
     "static/media/HermanTangCsiroLab.jpg": "/static/media/HermanTangCsiroLab.cb14c7e0f9a42bf25f57.jpg",
@@ -23,14 +23,15 @@
     "static/media/html-icon.svg": "/static/media/html-icon.185baee7db74b83bf22eec6a6def7644.svg",
     "static/media/css-icon.svg": "/static/media/css-icon.212d777ae2db63edb235490d487dc292.svg",
     "static/media/wordpress.svg": "/static/media/wordpress.19efd7af1fafc38a53600387f0821d3d.svg",
+    "static/media/vscode-icon.svg": "/static/media/vscode-icon.7bfadaaeba8770093f98a79aa2c77d41.svg",
     "static/media/linkedin.svg": "/static/media/linkedin.4f00d78f67f451cf01173f7418aa186f.svg",
     "static/media/js-icon.svg": "/static/media/js-icon.2d25723e91c8a9e057ae447ae6a73ecb.svg",
     "static/media/vue-icon.svg": "/static/media/vue-icon.7219cc0384993fc067ee20c94a66b1e9.svg",
-    "main.40df3699.css.map": "/static/css/main.40df3699.css.map",
-    "main.3737098b.js.map": "/static/js/main.3737098b.js.map"
+    "main.f7219e66.css.map": "/static/css/main.f7219e66.css.map",
+    "main.4ecef559.js.map": "/static/js/main.4ecef559.js.map"
   },
   "entrypoints": [
-    "static/css/main.40df3699.css",
-    "static/js/main.3737098b.js"
+    "static/css/main.f7219e66.css",
+    "static/js/main.4ecef559.js"
   ]
 }
