@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/static/css/main.40df3699.css",
-    "main.js": "/static/js/main.fa5bcd15.js",
+    "main.js": "/static/js/main.00c639c6.js",
+    "static/media/CSIRO_Lab.jpg": "/static/media/CSIRO_Lab.1ab09d084f33c39be731.jpg",
     "static/media/Hello.gif": "/static/media/Hello.d93720933c608f6178fb.gif",
     "static/media/HermanTangCsiroLab.jpg": "/static/media/HermanTangCsiroLab.cb14c7e0f9a42bf25f57.jpg",
     "static/media/Vinayak_Kumar_Singh_Resume.pdf": "/static/media/Vinayak_Kumar_Singh_Resume.b4572eebc9a23410e840.pdf",
     "static/media/illustration.svg": "/static/media/illustration.cf4b7a67f23b684549c4f797c62b527a.svg",
-    "static/media/sass-icon.svg": "/static/media/sass-icon.3572f53ec4f404e921a9e8193cdb70fe.svg",
     "static/media/node-icon.svg": "/static/media/node-icon.cc3d45a160579a330a5c17cc2c8f1407.svg",
     "static/media/typescript-icon.svg": "/static/media/typescript-icon.f3bc0fd998dea6b1266965436af97a49.svg",
     "static/media/whatsapp.svg": "/static/media/whatsapp.459dad86534ca5699520ed770f3ce605.svg",
@@ -27,10 +27,10 @@
     "static/media/js-icon.svg": "/static/media/js-icon.2d25723e91c8a9e057ae447ae6a73ecb.svg",
     "static/media/vue-icon.svg": "/static/media/vue-icon.7219cc0384993fc067ee20c94a66b1e9.svg",
     "main.40df3699.css.map": "/static/css/main.40df3699.css.map",
-    "main.fa5bcd15.js.map": "/static/js/main.fa5bcd15.js.map"
+    "main.00c639c6.js.map": "/static/js/main.00c639c6.js.map"
   },
   "entrypoints": [
     "static/css/main.40df3699.css",
-    "static/js/main.fa5bcd15.js"
+    "static/js/main.00c639c6.js"
   ]
 }

@@ -1,25 +1,23 @@
 import styled from "styled-components";
-
+import backgroundImage from "../../assets/CSIRO_Lab.jpg"; // Adjust path if needed
 
 export const Container = styled.main`
   position: relative;
   z-index: 0;
   padding: 0 10rem;
   overflow-x: hidden;
-  #tsparticles{
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-  }
+  min-height: 100vh;
 
-  @media (max-width: 740px){
+  /* Background Image */
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.95)), 
+              url(${backgroundImage}) no-repeat center center fixed;
+  background-size: cover;
+
+  @media (max-width: 740px) {
     padding: 0 4rem;
   }
 
-  @media(max-width: 360px){
+  @media (max-width: 360px) {
     padding: 0 2rem;
   }
-`
+`;
