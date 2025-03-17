@@ -18,23 +18,10 @@ export const Container = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
 
-  /* ✅ Add Transparent White Circle */
-  .icon-wrapper {
-    width: 14rem; /* ✅ Slightly larger than icon */
-    height: 14rem; /* ✅ Creates circular effect */
-    background: rgba(255, 255, 255, 1); /* ✅ Semi-transparent white */
-    border-radius: 50%; /* ✅ Makes it a circle */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* ✅ Optional: Adds a subtle shadow */
-  }
-
-  .icon-wrapper img {
-    width: 12rem; /* ✅ Keep icon size unchanged */
-    height: auto;
+    img {
+      width: 3.4rem;
+    }
   }
 
   h2 {
@@ -56,35 +43,29 @@ export const Container = styled.section`
     font-weight: 500;
   }
 
-  .about-image {
+  /* ✅ Updated .arcentry section to use an iframe instead of an image */
+  .arcentry {
     text-align: center;
 
-    img {
+    iframe {
       margin-top: 2rem;
-      width: 75%;
-      filter: grayscale(0);
-      transition: filter 0.5s;
-
-      &:hover {
-        filter: grayscale(0);
-      }
+      width: 100%;
+      max-width: 1400px;
+      height: 600px;
+      border: none;
     }
   }
 
+  /* ✅ Mobile-friendly adjustments */
   @media only screen and (max-width: 480px) {
-    .about-image {
+    .arcentry {
       max-width: 100%;
       margin-top: 4rem;
 
-      img {
-        margin-top: 2rem;
+      iframe {
         width: 100%;
-        filter: grayscale(0);
-        transition: filter 0.5s;
-
-        &:hover {
-          filter: grayscale(0);
-        }
+        height: auto;
+        min-height: 300px;
       }
     }
   }
@@ -97,19 +78,14 @@ export const Container = styled.section`
       justify-content: center;
     }
 
-    .about-image {
+    .arcentry {
       display: flex;
+      justify-content: center;
       max-width: 100%;
 
-      img {
-        margin-top: 2rem;
+      iframe {
         width: 100%;
-        filter: grayscale(0);
-        transition: filter 0.5s;
-
-        &:hover {
-          filter: grayscale(0);
-        }
+        height: 400px;
       }
     }
   }

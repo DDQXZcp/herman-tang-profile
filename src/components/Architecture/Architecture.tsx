@@ -1,5 +1,4 @@
 import { Container } from "./styles";
-import HermanTang from "../../assets/HermanTangCsiroLab.jpg";
 import wordpress from "../../assets/wordpress.svg";
 import shopify from "../../assets/shopify.svg";
 import htmlIcon from "../../assets/html-icon.svg";
@@ -10,18 +9,14 @@ import reactIcon from "../../assets/react-icon.svg";
 import typescriptIcon from "../../assets/typescript-icon.svg";
 import vueIcon from "../../assets/vue-icon.svg";
 import boostrapIcon from "../../assets/bootstrap-icon.svg";
-import AwsCloudPractioner from "../../assets/AwsCloudPractitioner.png";
-import ccna from "../../assets/ccna.png"
-
-// ✅ Use `react-awesome-reveal` for better animation support in React 18
 import { Fade } from "react-awesome-reveal";
 
-export function About() {
+export function Architecture() {
   return (
-    <Container id="about">
+    <Container id="architecture">
       <div className="about-text">
         <Fade direction="left">
-          <h2>About me</h2>
+          <h2>About this Website</h2>
         </Fade>
 
         <Fade direction="left" delay={100}>
@@ -47,22 +42,19 @@ export function About() {
         </Fade>
 
         <div className="hard-skills">
-          {[ccna, AwsCloudPractioner].map((icon, index) => (
+          {[wordpress, shopify, reactIcon, typescriptIcon, vueIcon, nodeIcon, htmlIcon, cssIcon, boostrapIcon, jsIcon].map((icon, index) => (
             <div className="hability" key={index}>
               <Fade direction="up" delay={100 + index * 20}>
-                <div className="icon-wrapper"> {/* ✅ Wrap icon with a circle */}
-                  <img src={icon} alt="Skill Icon" />
-                </div>
+                <img src={icon} alt="Skill Icon" />
               </Fade>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="about-image">
-        <Fade direction="right" delay={200}>
-          <img src={HermanTang} alt="Herman Tang" />
-        </Fade>
+      {/* ✅ Replaced image with iframe */}
+      <div className="arcentry">
+        <iframe src="https://arcentry.com/app/embed.html?id=f5cc5a63-30f0-454e-8c8e-723e64b31eae"></iframe>
       </div>
     </Container>
   );

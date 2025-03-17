@@ -7,11 +7,13 @@ export const Container = styled.main`
   padding: 0 10rem;
   overflow-x: hidden;
   min-height: 100vh;
+  width: 100%;
+  box-sizing: border-box;
 
-  /* Background Image */
+  /* ✅ Use CSS Variable for Scrollbar Width */
   background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.95)), 
-              url(${backgroundImage}) no-repeat center center fixed;
-  background-size: cover;
+              url(${backgroundImage}) no-repeat left center fixed;
+  background-size: calc(100% - var(--scrollbar-width, 0px)) auto; /* ✅ Dynamically adjusts */
 
   @media (max-width: 740px) {
     padding: 0 4rem;
