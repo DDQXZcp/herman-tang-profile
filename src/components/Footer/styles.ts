@@ -9,9 +9,29 @@ export const Container = styled.footer`
   align-items: center;
   justify-content: space-between;
 
+  .logo {
+    display: flex;
+    flex-direction: column;  /* ✅ Stack elements vertically */
+    align-items: center;     /* ✅ Center-align */
+    text-align: center;      /* ✅ Center text */
+    gap: 0.4rem;             /* ✅ Add spacing */
+  }
 
-  .logo{
-    font-size: 2.8rem;
+  .acknowledgement-title {
+    font-size: 2rem;   /* ✅ Make "Acknowledgement" larger */
+    font-weight: bold;
+    color: var(--green); /* Change color if needed */
+  }
+
+  .acknowledgement-text {
+    font-size: 2rem;  /* ✅ Make the other text smaller */
+    color: white;
+  }
+
+  .acknowledgement-link a {
+    font-size: 2rem;
+    color: white;  /* ✅ Change link color */
+    text-decoration: underline;
   }
 
   p{

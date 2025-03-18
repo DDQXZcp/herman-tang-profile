@@ -6,6 +6,8 @@ import { NavHashLink } from "react-router-hash-link"
 import linkedin from '../../assets/linkedin.svg'
 import githubIcon from '../../assets/github.svg'
 import Hello from '../../assets/Hello.gif'
+import HermanTangCircle from "../../assets/HermanTangCsiroLabCircle.png";
+
 export function Hero() {
   return (
     <Container id="home">
@@ -47,7 +49,7 @@ export function Hero() {
       </div>
       <div className="hero-image">
         <ScrollAnimation animateIn="fadeInRight" delay={1 * 1000}>
-          <img src={Illustration} alt="Ilustração" />
+          <img src={HermanTangCircle} alt="Herman Tang" />
         </ScrollAnimation>
       </div>
     </Container>

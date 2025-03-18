@@ -3,8 +3,8 @@ import styled from "styled-components";
 export const Container = styled.section`
   padding-top: 15%;
   display: flex;
-  justify-content: space-between;
-  gap: 8rem;
+  justify-content: center;
+  gap: 16rem;
   background: rgba(0,0,0,0);
   .hero-text{
     & > p{
