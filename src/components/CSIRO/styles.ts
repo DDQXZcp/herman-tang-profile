@@ -6,6 +6,7 @@ export const Container = styled.section`
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
   justify-content: center;
+  align-items: start;
 
   .hard-skills {
     margin-top: 1.6rem;
@@ -30,12 +31,12 @@ export const Container = styled.section`
     margin-bottom: 2rem;
     font-size: 3rem;
     margin-top: 0rem;
-    color: var(--green);
+    color: var(--CsiroBlue);
   }
 
   h3 {
     margin-top: 2rem;
-    color: var(--green);
+    color: var(--CsiroBlue);
   }
 
   p {
@@ -51,11 +52,22 @@ export const Container = styled.section`
     align-items: center;
   }
 
-  /* ✅ Ensure Photo Album is centered below everything */
-  .photo-album {
-    grid-column: span 2; /* ✅ Makes it take full width below both sections */
+  /* ✅ Google Slides iframe styling */
+  .presentation {
+    width: 100%;
     text-align: center;
-    margin-top: 3rem;
+
+    iframe {
+      max-width: 100%;
+      height: 400px;
+      border: none;
+    }
+  }
+
+  /* ✅ Reduce the gap between Google Slides and Photo Album */
+  .photo-album {
+    text-align: center;
+    margin-top: -40px; /* ✅ Reduce spacing */
     display: flex;
     justify-content: center;
   }
@@ -75,8 +87,13 @@ export const Container = styled.section`
       width: 100%;
     }
 
+    .presentation {
+      width: 100%;
+    }
+
     .photo-album {
       width: 100%;
+      margin-top: 0px;
     }
   }
 `;

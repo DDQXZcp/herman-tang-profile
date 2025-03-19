@@ -3,9 +3,9 @@ import { Carousel } from "react-responsive-carousel";
 import styled from "styled-components";
 
 // Import your photos here
-import photo1 from "../../assets/vscode-icon.svg";
-import photo2 from "../../assets/vscode-icon.svg";
-import photo3 from "../../assets/vscode-icon.svg";
+import poster from "../../assets/poster_me.jpg";
+import RobotArm from "../../assets/Lab_Robot_Arm.jpg";
+import SensorSet from "../../assets/Sensor_Set.jpg";
 
 const AlbumContainer = styled.div`
   max-width: 600px;
@@ -13,13 +13,13 @@ const AlbumContainer = styled.div`
   text-align: center;
 
   h3 {
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
     font-size: 1.8rem;
-    color: #23ce6b;
+    color: var(--CsiroBlue);
   }
 
   .carousel .slide img {
-    border-radius: 10px;
+    border-radius: 1rem;
   }
 `;
 
@@ -35,13 +35,13 @@ export function PhotoAlbum() {
         showThumbs={false}
       >
         <div>
-          <img src={photo1} alt="Photo 1" />
+          <img src={RobotArm} alt="Robot Arm" />
         </div>
         <div>
-          <img src={photo2} alt="Photo 2" />
+          <img src={RobotArm} alt="Poster Session" />
         </div>
         <div>
-          <img src={photo3} alt="Photo 3" />
+          <img src={SensorSet} alt="Sensor Set" />
         </div>
       </Carousel>
     </AlbumContainer>
