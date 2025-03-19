@@ -12,6 +12,11 @@ import vueIcon from "../../assets/vue-icon.svg";
 import boostrapIcon from "../../assets/bootstrap-icon.svg";
 import AwsCloudPractioner from "../../assets/AwsCloudPractitioner.png";
 import ccna from "../../assets/ccna.png"
+import ros from "../../assets/ros.png"
+import jetson from "../../assets/nvidia-jetson.png"
+import st from "../../assets/st-micro-logo.png"
+import altium from "../../assets/altium-designer-icon.webp"
+import solidworks from "../../assets/solidworks.png"
 
 // ✅ Use `react-awesome-reveal` for better animation support in React 18
 import { Fade } from "react-awesome-reveal";
@@ -26,24 +31,51 @@ export function About() {
 
         <Fade direction="left" delay={100}>
           <p>
-            Hi there! I'm Herman Tang, a website developer with a passion for creating custom online experiences. With a skill set including HTML, CSS, JavaScript, and React, I have the tools to bring any website vision to life.
+            Since 2017, I have been focused on electronics and robotics development.  
+            I have three years of experience in robotics competitions and one year of industry experience.  
           </p>
         </Fade>
-
-        <Fade direction="left" delay={200} style={{ marginTop: "2rem", marginBottom: "2rem" }}>
+        
+        <Fade direction="left" delay={150} style={{ marginTop: "2rem", marginBottom: "2rem" }}>
           <p>
-            But my services go beyond just custom development - I'm also proficient in using CMS systems like WordPress and Shopify, making it easy for clients to take control of their websites.
+            With a diverse skill set, I work across multiple domains, including mechanical design,  
+            PCB design, and firmware development. My expertise lies primarily in <span className="highlight">ARM-based firmware programming</span>,  
+            particularly with the STM32 series, as well as robotics software development using the <span className="highlight">Robot Operating System (ROS)</span> on Linux-based platforms like Jetson and Raspberry Pi.  
+            I also <span className="highlight">design PCBs</span> using Altium Designer and PADS Suite and <span className="highlight">create 3D models</span> in SolidWorks.
           </p>
         </Fade>
 
-        <Fade direction="left" delay={300}>
-          <p>
-            If you need a new website or a revamp of your online presence, I'd love to help. Let's bring your website vision to life together!
-          </p>
-        </Fade>
-
-        <Fade direction="left" delay={400}>
+        <Fade direction="left" delay={200}>
           <h3>Here are my main skills:</h3>
+        </Fade>
+
+        <div className="hard-skills">
+          {[st, jetson, ros, altium, solidworks].map((icon, index) => {
+            const customStyles = {
+              width: icon === ros ? "60%" : icon === jetson ? "80%" : icon === st ? "80%" : icon === solidworks ? "90%" : "100%", // Adjust sizes per icon
+            };
+
+            return (
+              <div className="hability" key={index}>
+                <Fade direction="up" delay={100 + index * 20}>
+                  <div className="icon-wrapper">
+                    <img src={icon} alt="Skill Icon" style={customStyles} />
+                  </div>
+                </Fade>
+              </div>
+            );
+          })}
+        </div>
+
+        <Fade direction="left" delay={300} style={{ marginTop: "2rem", marginBottom: "2rem" }}>
+          <p>
+            After 2022, I moved to Australia and gradually transitioned into software and cloud development while expanding on my past projects.
+            I earned the <span className="highlight">Cisco Certified Network Associate (CCNA)</span> and <span className="highlight">AWS Certified Cloud Practitioner certifications</span> and am now aiming to achieve the associate-level certification within the next few months.
+          </p>
+        </Fade>
+
+        <Fade direction="left" delay={350}>
+          <h3>Here are my certificates:</h3>
         </Fade>
 
         <div className="hard-skills">

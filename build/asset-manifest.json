@@ -1,14 +1,20 @@
 {
   "files": {
     "main.css": "/static/css/main.f7219e66.css",
-    "main.js": "/static/js/main.bdc187f7.js",
+    "main.js": "/static/js/main.60f7240c.js",
     "static/media/CSIRO_Lab.jpg": "/static/media/CSIRO_Lab.1ab09d084f33c39be731.jpg",
     "static/media/HermanTangCsiroLabCircle.png": "/static/media/HermanTangCsiroLabCircle.912583ad2e1fee9b7106.png",
     "static/media/Hello.gif": "/static/media/Hello.d93720933c608f6178fb.gif",
     "static/media/HermanTangCsiroLab.jpg": "/static/media/HermanTangCsiroLab.cb14c7e0f9a42bf25f57.jpg",
     "static/media/Vinayak_Kumar_Singh_Resume.pdf": "/static/media/Vinayak_Kumar_Singh_Resume.b4572eebc9a23410e840.pdf",
+    "static/media/nvidia-jetson.png": "/static/media/nvidia-jetson.447eebcecda8737ce447.png",
+    "static/media/ros.png": "/static/media/ros.0a0798700491dee29118.png",
     "static/media/AwsCloudPractitioner.png": "/static/media/AwsCloudPractitioner.bbf7c33bccce66b0b5fd.png",
+    "static/media/aws-icon.png": "/static/media/aws-icon.03bb364c28b1f3b4fac2.png",
+    "static/media/st-micro-logo.png": "/static/media/st-micro-logo.6a68709c42ff006b7be5.png",
     "static/media/ccna.png": "/static/media/ccna.cc609eef39654d579ce6.png",
+    "static/media/altium-designer-icon.webp": "/static/media/altium-designer-icon.290220507fc78e9956da.webp",
+    "static/media/solidworks.png": "/static/media/solidworks.7e7b543a2484b5e8b4e5.png",
     "static/media/node-icon.svg": "/static/media/node-icon.cc3d45a160579a330a5c17cc2c8f1407.svg",
     "static/media/typescript-icon.svg": "/static/media/typescript-icon.f3bc0fd998dea6b1266965436af97a49.svg",
     "static/media/bootstrap-icon.svg": "/static/media/bootstrap-icon.09b773cc0f17dc078cc9864e5e8006ba.svg",
@@ -25,10 +31,10 @@
     "static/media/js-icon.svg": "/static/media/js-icon.2d25723e91c8a9e057ae447ae6a73ecb.svg",
     "static/media/vue-icon.svg": "/static/media/vue-icon.7219cc0384993fc067ee20c94a66b1e9.svg",
     "main.f7219e66.css.map": "/static/css/main.f7219e66.css.map",
-    "main.bdc187f7.js.map": "/static/js/main.bdc187f7.js.map"
+    "main.60f7240c.js.map": "/static/js/main.60f7240c.js.map"
   },
   "entrypoints": [
     "static/css/main.f7219e66.css",
-    "static/js/main.bdc187f7.js"
+    "static/js/main.60f7240c.js"
   ]
 }

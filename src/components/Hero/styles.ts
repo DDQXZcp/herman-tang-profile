@@ -15,7 +15,7 @@ export const Container = styled.section`
     }
 
     h3{
-      color:var(--green);
+      color:var(--CsiroBlue);
       margin: 1rem 0;
     }
 
@@ -35,7 +35,7 @@ export const Container = styled.section`
 
     img,span{
       font-size: 3rem;
-      width: 3.5rem;
+      width: 6rem;
     }
   }
 

@@ -4,7 +4,7 @@ export const Container = styled.section`
   margin-top: 12rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  gap: 10rem;
 
   .hard-skills {
     margin-top: 1.6rem;
@@ -29,12 +29,12 @@ export const Container = styled.section`
     margin-bottom: 2rem;
     font-size: 3rem;
     margin-top: 0rem;
-    color: var(--green);
+    color: var(--CsiroBlue);
   }
 
   h3 {
     margin-top: 2rem;
-    color: var(--green);
+    color: var(--CsiroBlue);
   }
 
   p {
@@ -46,6 +46,7 @@ export const Container = styled.section`
   /* ✅ Updated .arcentry section to use an iframe instead of an image */
   .arcentry {
     text-align: center;
+    order: -1;
 
     iframe {
       margin-top: 2rem;

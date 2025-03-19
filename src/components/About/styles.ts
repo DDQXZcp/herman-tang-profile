@@ -42,12 +42,12 @@ export const Container = styled.section`
     margin-bottom: 2rem;
     font-size: 3rem;
     margin-top: 0rem;
-    color: var(--green);
+    color: var(--CsiroBlue);
   }
 
   h3 {
     margin-top: 2rem;
-    color: var(--green);
+    color: var(--CsiroBlue);
   }
 
   p {
