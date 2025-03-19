@@ -8,6 +8,7 @@ export const GlobalStyle = createGlobalStyle`
     --blue: #016fb9;
     --CsiroBlue #00AEEF;
     --AnuGold #B68D40;
+    --IeeeBlue #062D4F;
     scroll-padding-top: 10rem;
   }
 

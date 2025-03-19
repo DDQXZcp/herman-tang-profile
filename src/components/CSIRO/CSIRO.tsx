@@ -10,34 +10,51 @@ export function CSIRO() {
       <div className="left-column">
         <div className="about-text">
           <Fade direction="left">
-            <h2>About this Website</h2>
+            <h2>Robotics SLAM Research at CSIRO</h2>
           </Fade>
 
           <Fade direction="left" delay={100}>
             <p>
-              Hi there! I'm Herman Tang, a website developer with a passion for creating custom online experiences. 
-              With a skill set including HTML, CSS, JavaScript, and React, I have the tools to bring any website vision to life.
+              From <span className="highlight">July 2023 to November 2024</span>, 
+              I worked at <span className="highlight">CSIRO</span> as a <span className="highlight">software engineer</span>, 
+              focusing on improving <span className="highlight">dynamic SLAM algorithms</span>. 
             </p>
           </Fade>
 
-          <Fade direction="left" delay={200} style={{ marginTop: "2rem", marginBottom: "2rem" }}>
+          <Fade direction="left" delay={150} style={{ marginTop: "2rem", marginBottom: "2rem" }}>
             <p>
-              But my services go beyond just custom development - I'm also proficient in using CMS systems like 
-              WordPress and Shopify, making it easy for clients to take control of their websites.
+              To collect data and validate our appoach, I developed an <span className="highlight">indoor scanning robot</span> equipped with an <span className="highlight">NVIDIA AGX Xavier</span>, <span className="highlight">RealSense D435i depth camera</span>, and <span className="highlight">Mid-360 LiDAR</span>. I also programmed the <span className="highlight">ROS system</span> for <span className="highlight">real-time odometry</span> and <span className="highlight">3D reconstruction</span>.
+            </p>
+          </Fade>
+          
+          <Fade direction="left" delay={200}>
+            <p>
+              Our research was <span className="highlight">published at the DICTA 2024 Conference</span>.
             </p>
           </Fade>
 
-          <Fade direction="left" delay={300}>
+          <Fade direction="left" delay={250}>
+            <h3>Research Abstract:</h3>
+          </Fade>
+
+          <Fade direction="left" delay={300} style={{ marginTop: "2rem", marginBottom: "2rem" }}>
             <p>
-              If you need a new website or a revamp of your online presence, I'd love to help. 
-              Let's bring your website vision to life together!
+              Existing <span className="highlight">dynamic SLAM</span> solutions often rely on <span className="highlight">single-object semantic segmentation</span>, which is effective only when 
+              object classes are known and their static or dynamic nature is predefined. 
+              To address this limitation, we introduce <span className="highlight">video object segmentation (VOS)</span>, 
+              which combines <span className="highlight">segmentation and tracking</span> for improved dynamic SLAM performance. 
+              Additionally, we designed a <span className="highlight">low-cost mobile robot system</span> tailored for dynamic SLAM applications 
+              and curated a dataset using <span className="highlight">affordable RGB-D sensors</span>.
             </p>
           </Fade>
 
           {/* ✅ PaperCard on the left */}
-          <div className="paper-card">
-            <PaperCard />
-          </div>
+          <Fade direction="up" delay={350}>
+            <div className="paper-card">
+              <PaperCard />
+            </div>
+          </Fade>
+          
         </div>
       </div>
 

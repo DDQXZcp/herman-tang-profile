@@ -15,7 +15,7 @@ const Card = styled.div`
     font-size: 1.6rem;
     margin-bottom: 8px;
     font-weight: bold;
-    color: #23ce6b;
+    color: var(--CsiroBlue);
   }
 
   p {
@@ -28,14 +28,14 @@ const Card = styled.div`
     margin-top: 12px;
     padding: 10px 20px;
     font-size: 1.4rem;
-    background: #23ce6b;
+    background: var(--IeeeBlue);
     color: #ffffff;
     border-radius: 5px;
     text-decoration: none;
     transition: background 0.3s ease-in-out;
 
     &:hover {
-      background: #1da456;
+      background: var(--CsiroBlue);
     }
   }
 `;
