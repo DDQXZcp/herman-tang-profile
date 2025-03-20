@@ -6,6 +6,7 @@ import { Project } from "../Project/Project";
 import { Architecture } from "../Architecture/Architecture";
 import { CSIRO } from "../CSIRO/CSIRO";
 import { useEffect } from "react";
+import {AnuTutor} from "../AnuTutor/AnuTutor"
 
 export function Main() {
   useEffect(() => {
@@ -43,6 +44,7 @@ export function Main() {
       <About />
       <Architecture />
       <CSIRO />
+      <AnuTutor />
       <Project />
       {/* <Contact /> */}
     </Container>
