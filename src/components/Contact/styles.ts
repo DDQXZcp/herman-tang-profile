@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 export const Container = styled.section`
   margin-top: 10rem;
+  margin-bottom: 10rem;
 
   header{
     text-align: center;
@@ -11,7 +12,7 @@ export const Container = styled.section`
       font-size: 4rem;
     }
     p{
-      color: var(--green);
+      color: var(--white);
       font-weight: 500;
     }
   }
@@ -30,7 +31,7 @@ export const Container = styled.section`
       width: 50%;
       max-width: 30rem;
       gap: 2rem;
-      background-color: var(--green);
+      background-color: var(--AnuGold);
       border-radius: 1.4rem;
       padding: 1.6rem 2.8rem;
       transition: background-color 0.25s;
@@ -42,7 +43,7 @@ export const Container = styled.section`
         font-weight: 500;
       }
       &:hover{
-        background-color: var(--pink);
+        background-color: var(--CsiroBlue);
         a{
           color: #FFF;
         }

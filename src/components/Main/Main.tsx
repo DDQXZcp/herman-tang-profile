@@ -46,7 +46,7 @@ export function Main() {
       <CSIRO />
       <AnuTutor />
       {/* <Project /> */}
-      {/* <Contact /> */}
+      <Contact />
     </Container>
   );
 }

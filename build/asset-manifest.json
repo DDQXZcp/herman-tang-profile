@@ -1,12 +1,15 @@
 {
   "files": {
     "main.css": "/static/css/main.f7219e66.css",
-    "main.js": "/static/js/main.a345bb13.js",
+    "main.js": "/static/js/main.55487e18.js",
     "static/media/CSIRO_Lab.jpg": "/static/media/CSIRO_Lab.1ab09d084f33c39be731.jpg",
     "static/media/Sensor_Set.jpg": "/static/media/Sensor_Set.5c7d952cb1e6812eddc3.jpg",
     "static/media/HermanTangCsiroLabCircle.png": "/static/media/HermanTangCsiroLabCircle.912583ad2e1fee9b7106.png",
+    "static/media/HermanTangCsiroLab2.jpg": "/static/media/HermanTangCsiroLab2.84558e1884bb0af7e824.jpg",
+    "static/media/CsiroWithChuong.jpg": "/static/media/CsiroWithChuong.8bb909a541e90e4ab898.jpg",
     "static/media/Hello.gif": "/static/media/Hello.d93720933c608f6178fb.gif",
-    "static/media/HermanTangCsiroLab.jpg": "/static/media/HermanTangCsiroLab.cb14c7e0f9a42bf25f57.jpg",
+    "static/media/CsiroWithSundaram.jpg": "/static/media/CsiroWithSundaram.22d2ec326fdcb09a61b6.jpg",
+    "static/media/HermanAnuTutor.jpg": "/static/media/HermanAnuTutor.ffd9091fa985880fa526.jpg",
     "static/media/Lab_Robot_Arm.jpg": "/static/media/Lab_Robot_Arm.cc59523193897230c0f2.jpg",
     "static/media/nvidia-jetson.png": "/static/media/nvidia-jetson.447eebcecda8737ce447.png",
     "static/media/ros.png": "/static/media/ros.0a0798700491dee29118.png",
@@ -18,13 +21,15 @@
     "static/media/solidworks.png": "/static/media/solidworks.7e7b543a2484b5e8b4e5.png",
     "static/media/react-icon.svg": "/static/media/react-icon.a010f287ea79ad0673b610a223faa951.svg",
     "index.html": "/index.html",
+    "static/media/phone-icon.svg": "/static/media/phone-icon.fc7195139d684fa2f6bb03b8b9816095.svg",
     "static/media/github.svg": "/static/media/github.d344c0fc70ddfb6de253ddc40adcb086.svg",
+    "static/media/email-icon.svg": "/static/media/email-icon.a5dd245e834641e729e77e40309039c4.svg",
     "static/media/linkedin.svg": "/static/media/linkedin.4f00d78f67f451cf01173f7418aa186f.svg",
     "main.f7219e66.css.map": "/static/css/main.f7219e66.css.map",
-    "main.a345bb13.js.map": "/static/js/main.a345bb13.js.map"
+    "main.55487e18.js.map": "/static/js/main.55487e18.js.map"
   },
   "entrypoints": [
     "static/css/main.f7219e66.css",
-    "static/js/main.a345bb13.js"
+    "static/js/main.55487e18.js"
   ]
 }

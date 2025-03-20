@@ -1,5 +1,5 @@
 import { Container } from "./styles";
-import HermanTang from "../../assets/HermanTangCsiroLab.jpg";
+import HermanTang from "../../assets/HermanTangCsiroLab2.jpg";
 import wordpress from "../../assets/wordpress.svg";
 import shopify from "../../assets/shopify.svg";
 import htmlIcon from "../../assets/html-icon.svg";

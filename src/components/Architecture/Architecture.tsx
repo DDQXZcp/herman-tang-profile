@@ -79,7 +79,7 @@ export function Architecture() {
 
       {/* ✅ Replaced image with iframe */}
       <div className="arcentry">
-        <iframe src="https://arcentry.com/app/embed.html?id=8d0d3b82-e25f-4882-8c20-24552133744e"></iframe>
+        <iframe src="https://arcentry.com/app/embed.html?id=88a3edc7-4969-47dc-a4dc-65661730e9df"></iframe>
       </div>
     </Container>
   );

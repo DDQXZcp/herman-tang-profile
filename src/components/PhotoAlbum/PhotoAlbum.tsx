@@ -6,6 +6,8 @@ import styled from "styled-components";
 import poster from "../../assets/poster_me.jpg";
 import RobotArm from "../../assets/Lab_Robot_Arm.jpg";
 import SensorSet from "../../assets/Sensor_Set.jpg";
+import Chuong from "../../assets/CsiroWithChuong.jpg";
+import Sundaram from "../../assets/CsiroWithSundaram.jpg";
 
 const AlbumContainer = styled.div`
   max-width: 600px;
@@ -38,10 +40,13 @@ export function PhotoAlbum() {
           <img src={RobotArm} alt="Robot Arm" />
         </div>
         <div>
-          <img src={RobotArm} alt="Poster Session" />
+          <img src={SensorSet} alt="Robot Sensor Set" />
         </div>
         <div>
-          <img src={SensorSet} alt="Sensor Set" />
+          <img src={Chuong} alt="Discovery Cafe with Chuong" />
+        </div>
+        <div>
+          <img src={Sundaram} alt="Discovery Cafe with Sundaram" />
         </div>
       </Carousel>
     </AlbumContainer>

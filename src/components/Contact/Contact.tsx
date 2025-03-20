@@ -10,8 +10,8 @@ export function Contact(){
     <Container id="contact">
       <header>
         <h2>Contact</h2>
-        <p>Ready to get started on your project? </p>
-        <p>Contact me now for a Free consultation.</p>
+        <p>If you are interested in my background or skills, I'd love to connect!</p>
+        <p>Feel free to reach out via email or mobile</p>
       </header>
       <div className="contacts">
         <div>
@@ -19,11 +19,11 @@ export function Contact(){
           <a href="mailto:u7436114@anu.edu.au">u7436114@anu.edu.au</a>
         </div>
         <div>
-        <a href="tel:+919630576848"><img src={phoneIcon} alt="Phone No" /></a>
-          <a href="tel:+919630576848">(+91) 9630576848</a>
+        <a href="tel:+61 411937718"><img src={phoneIcon} alt="Phone No" /></a>
+          <a href="tel:+61 411937718">(+61) 411937718</a>
         </div>  
       </div>
-      <Form></Form>
+      {/* <Form></Form> */}
     </Container>
   )
 }

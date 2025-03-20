@@ -12,6 +12,7 @@ import boostrapIcon from "../../assets/bootstrap-icon.svg";
 import AwsIcon from "../../assets/aws-icon.png";
 import { Fade } from "react-awesome-reveal";
 import HermanTang from "../../assets/HermanTangCsiroLab.jpg";
+import HermanAnuTutor from "../../assets/HermanAnuTutor.jpg";
 
 export function AnuTutor() {
   return (
@@ -53,7 +54,7 @@ export function AnuTutor() {
           </p>
         </Fade> */}
 
-        <Fade direction="right" delay={400}>
+        {/* <Fade direction="right" delay={400}>
           <h3>Here are my main skills:</h3>
         </Fade>
 
@@ -73,13 +74,13 @@ export function AnuTutor() {
               </div>
             );
           })}
-        </div>
+        </div> */}
       </div>
 
       {/* ✅ Replaced image with iframe */}
       <div className="about-image">
         <Fade direction="right" delay={200}>
-          <img src={HermanTang} alt="Herman Tang" />
+          <img src={HermanAnuTutor} alt="Herman Tang" />
         </Fade>
       </div>
     </Container>
