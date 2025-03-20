@@ -45,7 +45,7 @@ export function Main() {
       <Architecture />
       <CSIRO />
       <AnuTutor />
-      <Project />
+      {/* <Project /> */}
       {/* <Contact /> */}
     </Container>
   );
