@@ -7,6 +7,7 @@ import { Architecture } from "../Architecture/Architecture";
 import { CSIRO } from "../CSIRO/CSIRO";
 import { useEffect } from "react";
 import {AnuTutor} from "../AnuTutor/AnuTutor"
+import {LSCM} from "../LSCM/LSCM"
 
 export function Main() {
   useEffect(() => {
@@ -44,8 +45,9 @@ export function Main() {
       <About />
       <Architecture />
       <CSIRO />
+      {/* <LSCM /> */}
       <AnuTutor />
-      {/* <Project /> */}
+      <Project />
       <Contact />
     </Container>
   );

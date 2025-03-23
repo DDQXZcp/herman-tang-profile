@@ -28,7 +28,7 @@ export const Container = styled.section`
       color: #FFF;
       &:hover{
         transform: translateY(-5px);
-        background-color: var(--pink);
+        background-color: var(--IeeeBlue);
       }
 
       header{
@@ -36,7 +36,7 @@ export const Container = styled.section`
         align-items: center;
         justify-content: space-between;
         color: var(--blue);
-        margin-bottom: 3.6rem;
+        margin-bottom: 1rem;
         .project-links{
           display: flex;
           align-items: center;
@@ -75,6 +75,33 @@ export const Container = styled.section`
         }
       }
 
+    }
+  }
+
+  .project-image {
+    display: flex;
+    width: 100%;
+    margin-bottom: 2rem;
+    justify-content: center;
+    
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 0.8rem;
+    }
+  }
+
+  .project-image-double {
+    display: flex;
+    gap: 1rem; /* spacing between images */
+    margin-bottom: 1.5rem;
+    justify-content: center;
+
+    img {
+      width: 50%;      /* each image takes half the row */
+      object-fit: cover;
+      border-radius: 0.8rem;
     }
   }
 
