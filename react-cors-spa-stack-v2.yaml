@@ -1,0 +1,518 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: >
+  Creates the infrastructure to host and expose a Single Page Application:
+      - An Amazon S3 bucket for hosting the application
+      - An Amazon CloudFront distribution to expose the application and the API
+      - An Amazon S3 bucket for hosting bucket and cloudfront access logs
+      - A public API to be used by the application
+  
+  Manual Steps:
+      - Create a certificate in us-east-1 in AWS Certificate Manager for https connection (AcmCertificateArn)
+      - Manually create a certificate in the AWS IoT Console: Go to AWS IoT → Security → Certificates → “Create a certificate” → “One-click certificate creation”.
+
+Parameters: {}
+
+Resources:
+  # Our simple REST API
+  SimpleAPI:
+    Type: 'AWS::ApiGateway::RestApi'
+    Properties:
+      Description: A simple REST API
+      Name: SimpleAPI
+      EndpointConfiguration:
+        Types:
+          - REGIONAL
+
+  # The Resource (/hello) of our API
+  SimpleAPIResource:
+    Type: 'AWS::ApiGateway::Resource'
+    Properties:
+      ParentId: !GetAtt 
+        - SimpleAPI
+        - RootResourceId
+      PathPart: hello
+      RestApiId: !Ref SimpleAPI
+
+  # The method to call (GET) for our API
+  HelloAPIGETMethod:
+    Type: 'AWS::ApiGateway::Method'
+    #checkov:skip=CKV_AWS_59: "This API does not expose backend service"
+    DependsOn:
+      - CFDistributionSPA
+    Properties:
+      ApiKeyRequired: false
+      AuthorizationType: NONE
+      HttpMethod: GET
+      Integration:
+        Type: MOCK
+        PassthroughBehavior: WHEN_NO_MATCH
+        RequestTemplates:
+          application/json: "{\n \"statusCode\": 200\n}"
+        IntegrationResponses:
+          - StatusCode: 200
+            SelectionPattern: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Origin: !Sub  '''https://${CFDistributionSPA.DomainName}'''
+            ResponseTemplates:
+              application/json: "{\"message\": \"Hello World!\"}"
+      MethodResponses:
+        - StatusCode: 200
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Origin: true
+          ResponseModels:
+            application/json: Empty
+      RestApiId: !Ref SimpleAPI
+      ResourceId: !Ref SimpleAPIResource
+
+  # A deployment resource for deploying our API
+  Deployment:
+    Type: 'AWS::ApiGateway::Deployment'
+    DependsOn:
+      - HelloAPIGETMethod
+    Properties:
+      RestApiId: !Ref SimpleAPI
+      StageName: v1
+
+  # The Amazon S3 bucket into which our Single Page Application build files must be deployed
+  S3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Sub 'react-cors-spa-${SimpleAPI}'
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls : true
+        BlockPublicPolicy : true
+        IgnorePublicAcls : true
+        RestrictPublicBuckets : true
+      LoggingConfiguration:
+        DestinationBucketName: !Ref LoggingBucket
+        LogFilePrefix: s3-access-logs
+      VersioningConfiguration:
+        Status: Enabled
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - ServerSideEncryptionByDefault:
+            SSEAlgorithm: 'AES256'
+
+  # The Amazon S3 bucket policy for securing the bucket hosting the application
+  BucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      PolicyDocument:
+        Id: MyPolicy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PolicyForCloudFrontPrivateContent
+            Effect: Allow
+            Resource: !Sub ${S3Bucket.Arn}/*
+            Principal:
+              Service: cloudfront.amazonaws.com
+            Condition:
+              StringEquals:
+                AWS:SourceArn: !Sub arn:aws:cloudfront::${AWS::AccountId}:distribution/${CFDistributionSPA}
+            Action: 's3:GetObject*'
+      Bucket: !Ref S3Bucket
+
+  BucketPolicyForLogging:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      PolicyDocument:
+        Id: S3LoggingPolicy
+        Version: 2012-10-17
+        Statement:
+          - Sid: PolicyForS3ServerLog
+            Effect: Allow
+            Resource: !Sub ${LoggingBucket.Arn}/*
+            Principal:
+              Service: logging.s3.amazonaws.com
+            Condition:
+              StringEquals:
+                AWS:SourceAccount: !Sub ${AWS::AccountId}
+            Action: 's3:PutObject'
+      Bucket: !Ref LoggingBucket
+
+  # The Amazon S3 bucket into which access logs from S3 (for the application) and CloudFront will be put
+  LoggingBucket:
+    #checkov:skip=CKV_AWS_18: "This bucket is private and only for storing logs"
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: !Sub 'react-cors-spa-${SimpleAPI}-logs'
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls : true
+        BlockPublicPolicy : true
+        IgnorePublicAcls : true
+        RestrictPublicBuckets : true
+      AccessControl: LogDeliveryWrite
+      VersioningConfiguration:
+        Status: Enabled
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - ServerSideEncryptionByDefault:
+            SSEAlgorithm: 'AES256'
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: BucketOwnerPreferred
+    DeletionPolicy: Delete
+
+  # The Amazon CloudFront distribution exposing our Single Page Application
+  # Policies can be found here: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-response-headers-policies.html
+  CFDistributionSPA:
+    #checkov:skip=CKV_AWS_68: "For demo purposes and to reduce cost, no WAF is configured"
+    Type: 'AWS::CloudFront::Distribution'
+    Properties:
+      DistributionConfig:
+        Origins:
+        - DomainName: !GetAtt S3Bucket.RegionalDomainName
+          Id: myS3Origin
+          S3OriginConfig:
+            OriginAccessIdentity: ""
+          OriginAccessControlId: !GetAtt CloudFrontOriginAccessControl.Id
+        Enabled: 'true'
+        DefaultRootObject: index.html
+        DefaultCacheBehavior:
+          AllowedMethods:
+          - GET
+          - HEAD
+          - OPTIONS
+          TargetOriginId: myS3Origin
+          CachePolicyId: 658327ea-f89d-4fab-a63d-7e88639e58f6 # CachingOptimized
+          OriginRequestPolicyId: 88a5eaf4-2fd4-4709-b370-b4c650ea3fcf # CORS-S3Origin
+          ResponseHeadersPolicyId: eaab4381-ed33-4a86-88ca-d9558dc6cd63 # CORS-with-preflight-and-SecurityHeadersPolicy
+          ViewerProtocolPolicy: redirect-to-https
+        CustomErrorResponses:
+          - ErrorCode: 403
+            ResponseCode: 200
+            ResponsePagePath: /index.html
+        PriceClass: PriceClass_All
+        Logging:
+          Bucket: !GetAtt LoggingBucket.RegionalDomainName
+          Prefix: 'cf-spa-access-logs'
+        ViewerCertificate:
+          AcmCertificateArn: arn:aws:acm:us-east-1:334643191233:certificate/8b188b6e-e416-4859-91ad-eac406b27775
+          SslSupportMethod: sni-only
+          MinimumProtocolVersion: 'TLSv1.2_2021'
+        Aliases:
+          - herman-tang.com
+          - www.herman-tang.com
+
+  Route53RootRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneName: "herman-tang.com."
+      Name: "herman-tang.com"
+      Type: A
+      AliasTarget:
+        HostedZoneId: Z2FDTNDATAQYW2  # CloudFront Hosted Zone ID
+        DNSName: !GetAtt CFDistributionSPA.DomainName
+
+  Route53WWWRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      HostedZoneName: "herman-tang.com."
+      Name: "www.herman-tang.com"
+      Type: A
+      AliasTarget:
+        HostedZoneId: Z2FDTNDATAQYW2  # CloudFront Hosted Zone ID
+        DNSName: !GetAtt CFDistributionSPA.DomainName
+
+  # The Amazon CloudFront distribution exposing our Simple REST API
+  # Policies can be found here: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-response-headers-policies.html
+  CFDistributionAPI:
+    #checkov:skip=CKV_AWS_68: "For demo purposes and to reduce cost, no WAF is configured"
+    Type: 'AWS::CloudFront::Distribution'
+    Properties:
+      DistributionConfig:
+        Origins:
+        - DomainName: !Sub "${SimpleAPI}.execute-api.${AWS::Region}.amazonaws.com"
+          Id: myAPIGTWOrigin
+          CustomOriginConfig:
+            OriginProtocolPolicy: https-only
+        Enabled: 'true'
+        DefaultCacheBehavior:
+            AllowedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+            TargetOriginId: myAPIGTWOrigin
+            CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad # CachingDisabled
+            OriginRequestPolicyId: b689b0a8-53d0-40ab-baf2-68738e2966ac # AllViewerExceptHostHeader
+            ResponseHeadersPolicyId: eaab4381-ed33-4a86-88ca-d9558dc6cd63 # CORS-with-preflight-and-SecurityHeadersPolicy
+            ViewerProtocolPolicy: redirect-to-https
+        PriceClass: PriceClass_All
+        Logging:
+          Bucket: !GetAtt LoggingBucket.RegionalDomainName
+          Prefix: 'cf-api-access-logs'
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: true
+          MinimumProtocolVersion: 'TLSv1.2_2021'
+
+  # The Amazon CloudFront origin access control
+  CloudFrontOriginAccessControl:
+    Type: AWS::CloudFront::OriginAccessControl
+    DependsOn:
+      - S3Bucket
+    Properties: 
+      OriginAccessControlConfig:
+        Description: Default Origin Access Control
+        Name: !Ref AWS::StackName
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+# --- WebSocket Real-Time Infrastructure ---
+# WebSocket API Gateway and real-time connection handling from IoT
+
+  # WebSocket resources retained from current canvas content
+  WebSocketApi:
+    Type: AWS::ApiGatewayV2::Api
+    Properties:
+      Name: RealTimeIoTWebSocketApi
+      ProtocolType: WEBSOCKET
+      RouteSelectionExpression: "$request.body.action"
+
+  WebSocketConnectRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref WebSocketApi
+      RouteKey: "$connect"
+      AuthorizationType: NONE
+      Target: !Sub "integrations/${WebSocketConnectIntegration}"
+
+  WebSocketDisconnectRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref WebSocketApi
+      RouteKey: "$disconnect"
+      AuthorizationType: NONE
+      Target: !Sub "integrations/${WebSocketDisconnectIntegration}"
+
+  WebSocketDefaultRoute:
+    Type: AWS::ApiGatewayV2::Route
+    Properties:
+      ApiId: !Ref WebSocketApi
+      RouteKey: "$default"
+      AuthorizationType: NONE
+      Target: !Sub "integrations/${WebSocketDefaultIntegration}"
+
+  WebSocketConnectIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref WebSocketApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !Sub
+        - arn:aws:apigateway:${Region}:lambda:path/2015-03-31/functions/${FunctionArn}/invocations
+        - Region: !Ref AWS::Region
+          FunctionArn: !GetAtt ConnectHandlerFunction.Arn
+      IntegrationMethod: POST
+
+  WebSocketDisconnectIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref WebSocketApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !Sub
+        - arn:aws:apigateway:${Region}:lambda:path/2015-03-31/functions/${FunctionArn}/invocations
+        - Region: !Ref AWS::Region
+          FunctionArn: !GetAtt DisconnectHandlerFunction.Arn
+      IntegrationMethod: POST
+
+  WebSocketDefaultIntegration:
+    Type: AWS::ApiGatewayV2::Integration
+    Properties:
+      ApiId: !Ref WebSocketApi
+      IntegrationType: AWS_PROXY
+      IntegrationUri: !Sub
+        - arn:aws:apigateway:${Region}:lambda:path/2015-03-31/functions/${FunctionArn}/invocations
+        - Region: !Ref AWS::Region
+          FunctionArn: !GetAtt DefaultHandlerFunction.Arn
+      IntegrationMethod: POST
+
+  WebSocketStage:
+    Type: AWS::ApiGatewayV2::Stage
+    Properties:
+      ApiId: !Ref WebSocketApi
+      StageName: prod
+      AutoDeploy: true
+
+  WebSocketConnectionsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: WebSocketConnections
+      AttributeDefinitions:
+        - AttributeName: connectionId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: connectionId
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
+  ConnectHandlerFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: WebSocketConnectHandler
+      Handler: index.handler
+      Runtime: nodejs18.x
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Code:
+        ZipFile: |
+          const AWS = require('aws-sdk');
+          const docClient = new AWS.DynamoDB.DocumentClient();
+
+          exports.handler = async (event) => {
+            const connectionId = event.requestContext.connectionId;
+            await docClient.put({
+              TableName: 'WebSocketConnections',
+              Item: { connectionId }
+            }).promise();
+            return { statusCode: 200, body: 'Connected' };
+          };
+
+  DisconnectHandlerFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: WebSocketDisconnectHandler
+      Handler: index.handler
+      Runtime: nodejs18.x
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Code:
+        ZipFile: |
+          const AWS = require('aws-sdk');
+          const docClient = new AWS.DynamoDB.DocumentClient();
+
+          exports.handler = async (event) => {
+            const connectionId = event.requestContext.connectionId;
+            await docClient.delete({
+              TableName: 'WebSocketConnections',
+              Key: { connectionId }
+            }).promise();
+            return { statusCode: 200, body: 'Disconnected' };
+          };
+
+  DefaultHandlerFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: WebSocketDefaultHandler
+      Handler: index.handler
+      Runtime: nodejs18.x
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Code:
+        ZipFile: |
+          exports.handler = async (event) => {
+            return { statusCode: 200, body: 'Default route' };
+          };
+
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: WebSocketDynamoDBAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - dynamodb:PutItem
+                  - dynamodb:DeleteItem
+                Resource: !GetAtt WebSocketConnectionsTable.Arn
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: '*'
+
+  IoTPushToWebSocketFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: IoTPushToWebSocketFunction
+      Handler: index.handler
+      Runtime: nodejs18.x
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          TABLE_NAME: WebSocketConnections
+          STAGE: prod
+          API_ID: !Ref WebSocketApi
+      Code:
+        ZipFile: |
+          const AWS = require('aws-sdk');
+          const ddb = new AWS.DynamoDB.DocumentClient();
+          const api = new AWS.ApiGatewayManagementApi({
+            endpoint: process.env.API_ID + ".execute-api." + process.env.AWS_REGION + ".amazonaws.com/" + process.env.STAGE
+          });
+
+          exports.handler = async (event) => {
+            const message = event; // Direct IoT Rule payload
+            const result = await ddb.scan({ TableName: process.env.TABLE_NAME }).promise();
+            const postCalls = result.Items.map(async ({ connectionId }) => {
+              try {
+                await api.postToConnection({
+                  ConnectionId: connectionId,
+                  Data: JSON.stringify(message)
+                }).promise();
+              } catch (err) {
+                if (err.statusCode === 410) {
+                  await ddb.delete({
+                    TableName: process.env.TABLE_NAME,
+                    Key: { connectionId }
+                  }).promise();
+                }
+              }
+            });
+            await Promise.all(postCalls);
+            return { statusCode: 200, body: 'Message sent.' };
+          };
+          };
+  IoTRule:
+    Type: AWS::IoT::TopicRule
+    Properties:
+      RuleName: PushSensorDataToWebSocket
+      TopicRulePayload:
+        Sql: "SELECT * FROM 'sensors/data'"
+        Actions:
+          - Lambda:
+              FunctionArn: !GetAtt IoTPushToWebSocketFunction.Arn
+        RuleDisabled: false
+    
+  LambdaInvokePermissionForIoTRule:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref IoTPushToWebSocketFunction
+      Action: lambda:InvokeFunction
+      Principal: iot.amazonaws.com
+      SourceArn: !Sub "arn:aws:iot:${AWS::Region}:${AWS::AccountId}:rule/PushSensorDataToWebSocket"
+
+  MyIoTPolicy:
+    Type: AWS::IoT::Policy
+    Properties:
+      PolicyName: MySensorPolicy
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Action:
+              - iot:Connect
+              - iot:Publish
+              - iot:Receive
+              - iot:Subscribe
+              - iot:GetThingShadow
+              - iot:UpdateThingShadow
+            Resource: "*"
+
+Outputs:
+  WebSocketApiEndpoint:
+    Value: !Sub "wss://${WebSocketApi}.execute-api.${AWS::Region}.amazonaws.com/prod"
+
+  BucketName:
+    Value: !Sub "react-cors-spa-${SimpleAPI}"
+  SPADomain:
+    Value: !GetAtt CFDistributionSPA.DomainName
+  APIDomain:
+    Value: !GetAtt CFDistributionAPI.DomainName
