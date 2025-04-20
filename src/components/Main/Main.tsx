@@ -8,6 +8,7 @@ import { CSIRO } from "../CSIRO/CSIRO";
 import { useEffect } from "react";
 import {AnuTutor} from "../AnuTutor/AnuTutor"
 import {LSCM} from "../LSCM/LSCM"
+import { IoT } from "../IoT/IoT";
 
 export function Main() {
   useEffect(() => {
@@ -48,6 +49,7 @@ export function Main() {
       {/* <LSCM /> */}
       <AnuTutor />
       <Project />
+      <IoT/>
       <Contact />
     </Container>
   );

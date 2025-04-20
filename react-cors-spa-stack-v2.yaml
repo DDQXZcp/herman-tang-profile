@@ -351,20 +351,41 @@ Resources:
     Properties:
       FunctionName: WebSocketConnectHandler
       Handler: index.handler
-      Runtime: nodejs18.x
+      Runtime: nodejs20.x
       Role: !GetAtt LambdaExecutionRole.Arn
+      Environment:
+        Variables:
+          TABLE_NAME: WebSocketConnections
       Code:
         ZipFile: |
-          const AWS = require('aws-sdk');
-          const docClient = new AWS.DynamoDB.DocumentClient();
+          const { DynamoDBClient, PutItemCommand } = require("@aws-sdk/client-dynamodb");
+
+          const ddb = new DynamoDBClient();
 
           exports.handler = async (event) => {
+            console.log("Connection event:", JSON.stringify(event));
+
             const connectionId = event.requestContext.connectionId;
-            await docClient.put({
-              TableName: 'WebSocketConnections',
-              Item: { connectionId }
-            }).promise();
-            return { statusCode: 200, body: 'Connected' };
+            const tableName = process.env.TABLE_NAME;
+
+            try {
+              await ddb.send(new PutItemCommand({
+                TableName: tableName,
+                Item: {
+                  connectionId: { S: connectionId }
+                }
+              }));
+              return {
+                statusCode: 200,
+                body: 'Connected'
+              };
+            } catch (err) {
+              console.error("Error writing to DynamoDB:", err);
+              return {
+                statusCode: 500,
+                body: 'Failed to connect'
+              };
+            }
           };
 
   DisconnectHandlerFunction:
@@ -372,20 +393,29 @@ Resources:
     Properties:
       FunctionName: WebSocketDisconnectHandler
       Handler: index.handler
-      Runtime: nodejs18.x
+      Runtime: nodejs20.x
       Role: !GetAtt LambdaExecutionRole.Arn
       Code:
         ZipFile: |
-          const AWS = require('aws-sdk');
-          const docClient = new AWS.DynamoDB.DocumentClient();
+          const { DynamoDBClient, DeleteItemCommand } = require("@aws-sdk/client-dynamodb");
+
+          const ddb = new DynamoDBClient();
 
           exports.handler = async (event) => {
             const connectionId = event.requestContext.connectionId;
-            await docClient.delete({
-              TableName: 'WebSocketConnections',
-              Key: { connectionId }
-            }).promise();
-            return { statusCode: 200, body: 'Disconnected' };
+
+            try {
+              await ddb.send(new DeleteItemCommand({
+                TableName: 'WebSocketConnections',
+                Key: {
+                  connectionId: { S: connectionId }
+                }
+              }));
+              return { statusCode: 200, body: 'Disconnected' };
+            } catch (err) {
+              console.error("Error deleting from DynamoDB:", err);
+              return { statusCode: 500, body: 'Failed to disconnect' };
+            }
           };
 
   DefaultHandlerFunction:
@@ -393,13 +423,15 @@ Resources:
     Properties:
       FunctionName: WebSocketDefaultHandler
       Handler: index.handler
-      Runtime: nodejs18.x
+      Runtime: nodejs20.x
       Role: !GetAtt LambdaExecutionRole.Arn
       Code:
         ZipFile: |
           exports.handler = async (event) => {
+            console.log("Default route hit:", JSON.stringify(event));
             return { statusCode: 200, body: 'Default route' };
           };
+
 
   LambdaExecutionRole:
     Type: AWS::IAM::Role
@@ -420,6 +452,8 @@ Resources:
                 Action:
                   - dynamodb:PutItem
                   - dynamodb:DeleteItem
+                  - dynamodb:Scan            # ✅ Add this line
+                  - dynamodb:GetItem         # ✅ (Optional but helpful)
                 Resource: !GetAtt WebSocketConnectionsTable.Arn
               - Effect: Allow
                 Action:
@@ -427,49 +461,123 @@ Resources:
                   - logs:CreateLogStream
                   - logs:PutLogEvents
                 Resource: '*'
+              - Effect: Allow
+                Action:
+                  - execute-api:ManageConnections
+                Resource: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${WebSocketApi}/*"
 
   IoTPushToWebSocketFunction:
     Type: AWS::Lambda::Function
     Properties:
       FunctionName: IoTPushToWebSocketFunction
       Handler: index.handler
-      Runtime: nodejs18.x
+      Runtime: nodejs20.x
       Role: !GetAtt LambdaExecutionRole.Arn
       Environment:
         Variables:
           TABLE_NAME: WebSocketConnections
-          STAGE: prod
-          API_ID: !Ref WebSocketApi
+          WEBSOCKET_ENDPOINT: !Sub "https://${WebSocketApi}.execute-api.${AWS::Region}.amazonaws.com/prod"
       Code:
         ZipFile: |
-          const AWS = require('aws-sdk');
-          const ddb = new AWS.DynamoDB.DocumentClient();
-          const api = new AWS.ApiGatewayManagementApi({
-            endpoint: process.env.API_ID + ".execute-api." + process.env.AWS_REGION + ".amazonaws.com/" + process.env.STAGE
-          });
+          const {
+            DynamoDBClient,
+            ScanCommand,
+            DeleteItemCommand
+          } = require("@aws-sdk/client-dynamodb");
+          const {
+            ApiGatewayManagementApiClient,
+            PostToConnectionCommand
+          } = require("@aws-sdk/client-apigatewaymanagementapi");
+
+          const ddb = new DynamoDBClient({});
+          let apiClient;
 
           exports.handler = async (event) => {
-            const message = event; // Direct IoT Rule payload
-            const result = await ddb.scan({ TableName: process.env.TABLE_NAME }).promise();
-            const postCalls = result.Items.map(async ({ connectionId }) => {
-              try {
-                await api.postToConnection({
-                  ConnectionId: connectionId,
-                  Data: JSON.stringify(message)
-                }).promise();
-              } catch (err) {
-                if (err.statusCode === 410) {
-                  await ddb.delete({
-                    TableName: process.env.TABLE_NAME,
-                    Key: { connectionId }
-                  }).promise();
+            console.log("✅ [IoTPushToWebSocket] Lambda triggered by IoT message");
+            console.log("📦 Received payload:", JSON.stringify(event));
+
+            if (!apiClient) {
+              apiClient = new ApiGatewayManagementApiClient({
+                endpoint: process.env.WEBSOCKET_ENDPOINT
+              });
+            }
+
+            try {
+              const result = await ddb.send(new ScanCommand({
+                TableName: process.env.TABLE_NAME
+              }));
+
+              console.log(`📡 Found ${result.Items.length} WebSocket connection(s) in DynamoDB`);
+
+              const postCalls = result.Items.map(async (item) => {
+                const connectionId = item.connectionId.S;
+                console.log(`🔁 Sending to connectionId: ${connectionId}`);
+
+                try {
+                  await apiClient.send(new PostToConnectionCommand({
+                    ConnectionId: connectionId,
+                    Data: JSON.stringify(event)
+                  }));
+                  console.log(`✅ Sent to ${connectionId}`);
+                } catch (err) {
+                  console.error(`❌ Failed to send to ${connectionId}`, err);
+
+                  const isStale =
+                    err.name === 'GoneException' ||
+                    err.$metadata?.httpStatusCode === 410 ||
+                    err.statusCode === 410;
+
+                  if (isStale) {
+                    console.warn(`🗑 Removing stale connection: ${connectionId}`);
+                    await ddb.send(new DeleteItemCommand({
+                      TableName: process.env.TABLE_NAME,
+                      Key: { connectionId: { S: connectionId } }
+                    }));
+                  }
                 }
-              }
-            });
-            await Promise.all(postCalls);
-            return { statusCode: 200, body: 'Message sent.' };
+              });
+
+              await Promise.all(postCalls);
+              console.log("✅ All broadcast attempts finished");
+              return { statusCode: 200, body: 'Message sent.' };
+
+            } catch (err) {
+              console.error("🔥 ERROR during Scan or Broadcast:", err);
+              return { statusCode: 500, body: 'Error broadcasting message.' };
+            }
           };
-          };
+
+  # Allow API Gateway to invoke the $connect route Lambda
+  WebSocketConnectInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref ConnectHandlerFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${WebSocketApi}/*/$connect"
+
+  # Allow API Gateway to invoke the $disconnect route Lambda
+  WebSocketDisconnectInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref DisconnectHandlerFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${WebSocketApi}/*/$disconnect"
+
+  # Allow API Gateway to invoke the $default route Lambda
+  WebSocketDefaultInvokePermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref DefaultHandlerFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceArn: !Sub "arn:aws:execute-api:${AWS::Region}:${AWS::AccountId}:${WebSocketApi}/*/$default"
+
+
+
+  # The IoTRule is deployed on IoT Core
+  # IoTRule triggers Lambda Function: IoTPushToWebSocketFunction for data "sensors/data"
   IoTRule:
     Type: AWS::IoT::TopicRule
     Properties:

@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.f7219e66.css",
-    "main.js": "/static/js/main.e0a809f0.js",
+    "main.js": "/static/js/main.05828ad6.js",
     "static/media/CSIRO_Lab.jpg": "/static/media/CSIRO_Lab.1ab09d084f33c39be731.jpg",
     "static/media/Sensor_Set.jpg": "/static/media/Sensor_Set.5c7d952cb1e6812eddc3.jpg",
     "static/media/Lora.jpg": "/static/media/Lora.d21947e247f7c374f9f5.jpg",
@@ -18,6 +18,7 @@
     "static/media/ChirpStack.png": "/static/media/ChirpStack.ed25315d6ffbe8d58813.png",
     "static/media/nvidia-jetson.png": "/static/media/nvidia-jetson.447eebcecda8737ce447.png",
     "static/media/ros.png": "/static/media/ros.0a0798700491dee29118.png",
+    "static/media/jetson-agx-xavier.jpg": "/static/media/jetson-agx-xavier.074b0ef6298096357e25.jpg",
     "static/media/AwsCloudPractitioner.png": "/static/media/AwsCloudPractitioner.bbf7c33bccce66b0b5fd.png",
     "static/media/aws-icon.png": "/static/media/aws-icon.03bb364c28b1f3b4fac2.png",
     "static/media/st-micro-logo.png": "/static/media/st-micro-logo.6a68709c42ff006b7be5.png",
@@ -32,10 +33,10 @@
     "static/media/external-link.svg": "/static/media/external-link.8ce0d189635b118259ec51d8c9b4a1d0.svg",
     "static/media/linkedin.svg": "/static/media/linkedin.4f00d78f67f451cf01173f7418aa186f.svg",
     "main.f7219e66.css.map": "/static/css/main.f7219e66.css.map",
-    "main.e0a809f0.js.map": "/static/js/main.e0a809f0.js.map"
+    "main.05828ad6.js.map": "/static/js/main.05828ad6.js.map"
   },
   "entrypoints": [
     "static/css/main.f7219e66.css",
-    "static/js/main.e0a809f0.js"
+    "static/js/main.05828ad6.js"
   ]
 }
