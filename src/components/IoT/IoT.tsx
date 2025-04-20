@@ -31,35 +31,39 @@ export function IoT() {
     return () => ws.close();
   }, []);
 
+  const renderJetsonCard = (title: string) => (
+    <ScrollAnimation animateIn="flipInX" key={title}>
+      <div className="project">
+        <header>
+          <h3 className="project-title">{title}</h3>
+        </header>
+
+        <div className="project-image">
+          <img src={Jetson} alt="Jetson" style={{ width: "40%" }} />
+        </div>
+
+        <div className="body" style={{ textAlign: "center" }}>
+          <h3 style={{ color: "white" }}>Real-time Temperature</h3>
+          <p style={{ fontSize: "4rem", fontWeight: "bold", color: "var(--AnuGold)" }}>
+            {temperature ? temperature : "No Data"}
+          </p>
+        </div>
+
+        <footer>
+          <ul className="tech-list">
+            <li>AWS IoT Core</li>
+            <li>MQTT</li>
+          </ul>
+        </footer>
+      </div>
+    </ScrollAnimation>
+  );
+
   return (
     <Container id="project">
       <h2>IoT Real-time Visualization</h2>
       <div className="projects">
-        <ScrollAnimation animateIn="flipInX">
-          <div className="project">
-            <header>
-              <h3 className="project-title">Jetson-1</h3>
-            </header>
-
-            <div className="project-image">
-              <img src={Jetson} alt="Jetson" style={{ width: "40%" }} />
-            </div>
-
-            <div className="body" style={{ textAlign: "center" }}>
-              <h3>Real-time Temperature</h3>
-              <p style={{ fontSize: "4rem", fontWeight: "bold", color: "var(--AnuGold)" }}>
-                {temperature ? temperature : "No Data"}
-              </p>
-            </div>
-
-            <footer>
-              <ul className="tech-list">
-                <li>AWS IoT Core</li>
-                <li>MQTT</li>
-              </ul>
-            </footer>
-          </div>
-        </ScrollAnimation>
+        {["Jetson-1", "Jetson-2", "Jetson-3"].map(renderJetsonCard)}
       </div>
     </Container>
   );
