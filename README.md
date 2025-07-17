@@ -8,7 +8,7 @@
 ## Cloud Deployment
 This static website is hosted on AWS. Centrally managing and versioning resources with [Cloudformation Template](./react-cors-spa-stack-v2.yaml) IaC.
 <p align="center">
-<img src ="./src/assets/AWS-Architecture.png" />
+<img src ="./src/assets/AWS-Architecture.png" style="width: 100%;"/>
 </p>
 
 ### Hosting Static Website
