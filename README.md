@@ -1,6 +1,10 @@
 # Herman Tang Personal Website
 
-## Cloud Deployment:
+<p align="center">
+<img src ="./src/assets/website-capture-screen.png" />
+</p>
+
+## Cloud Deployment
 This static website is hosted on AWS. Centrally managing and versioning resources with [Cloudformation Template](./react-cors-spa-stack-v2.yaml).
 <p align="center">
 <img src ="./src/assets/AWS-Architecture.png" />
@@ -15,23 +19,20 @@ This static website is hosted on AWS. Centrally managing and versioning resource
 - DynamoDB (Store User Session Info)
 - IoT Core (MQTT Broker)
 
-## Sections Included:
+## Sections Included
 - Personal Profile
 - Realtime IoT Visualization Demo
 
-## Technologies used:
+## Front End
 - React
 - Typescript
 - Styled Components
-
-## Cloud Deployment:
-- React
  
-## Manually Run:
+## Manually Run
 - yarn install
 - yarn run start
 
-## Manually Build:
+## Manually Build
 - yarn build start
 
 ## CI/CD Workflow
