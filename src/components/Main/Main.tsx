@@ -9,8 +9,12 @@ import { useEffect } from "react";
 import {AnuTutor} from "../AnuTutor/AnuTutor"
 import {LSCM} from "../LSCM/LSCM"
 import { IoT } from "../IoT/IoT";
+import { useLocation } from "react-router-dom"; // ✅ to check current path
 
 export function Main() {
+
+  const location = useLocation(); // ✅ Hook call
+
   useEffect(() => {
     const iframe = document.querySelector("iframe");
 
@@ -41,16 +45,15 @@ export function Main() {
 
   return (
     <Container>
-      {/* Sections */}
-      <Hero />
-      <About />
-      <Architecture />
-      <CSIRO />
-      {/* <LSCM /> */}
-      <AnuTutor />
-      <Project />
-      <IoT/>
-      <Contact />
+      <>
+        <Hero />
+        <About />
+        <Architecture />
+        <CSIRO />
+        <AnuTutor />
+        <Project />
+        <Contact />
+      </>
     </Container>
   );
 }

@@ -25,9 +25,7 @@ export function Hero() {
           <p className="small-resume">2 Years of Experience</p>
         </ScrollAnimation>
         <ScrollAnimation animateIn="fadeInUp" delay={0.8 * 1000}>
-          <BrowserRouter>
             <NavHashLink smooth to="#contact" className="button">Contact</NavHashLink>
-          </BrowserRouter>
         </ScrollAnimation>
         <ScrollAnimation animateIn="fadeInUp" delay={1 * 1000}>
       <div className="social-media"><a

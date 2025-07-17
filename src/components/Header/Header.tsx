@@ -1,11 +1,12 @@
 import { Container } from "./styles";
-import { BrowserRouter as Router } from "react-router-dom";
-import { NavHashLink, HashLink } from "react-router-hash-link";
+import { Link, useLocation } from "react-router-dom";
+import { HashLink, NavHashLink } from "react-router-hash-link";
 import { useState } from "react";
-import Resume from "../../assets/Vinayak_Kumar_Singh_Resume.pdf";
 
 export function Header() {
   const [isActive, setActive] = useState(false);
+  const location = useLocation();
+  const onHomepage = location.pathname === "/";
 
   function closeMenu() {
     setActive(false);
@@ -13,39 +14,27 @@ export function Header() {
 
   return (
     <Container className="header-fixed">
-      <Router>
-        <HashLink smooth to="#home" className="logo">
-          <span>{"Herman Tang"}</span>
-        </HashLink>
+      <HashLink smooth to="/#home" className="logo" onClick={closeMenu}>
+        <span>Herman Tang</span>
+      </HashLink>
 
-        <nav className={isActive ? "active" : ""}>
-          <NavHashLink smooth to="#home" onClick={closeMenu}>
-            Home
-          </NavHashLink>
-          <NavHashLink smooth to="#about" onClick={closeMenu}>
-            About me
-          </NavHashLink>
-          <NavHashLink smooth to="#project" onClick={closeMenu}>
-            Project
-          </NavHashLink>
-          <NavHashLink smooth to="#contact" onClick={closeMenu}>
-            Contact
-          </NavHashLink>
-          {/* <a href={Resume} download className="button">
-            Resume
-          </a> */}
-        </nav>
+      <nav className={isActive ? "active" : ""}>
+        <HashLink smooth to="/#home" onClick={closeMenu}>Home</HashLink>
+        <HashLink smooth to="/#about" onClick={closeMenu}>About me</HashLink>
+        <HashLink smooth to="/#project" onClick={closeMenu}>Project</HashLink>
+        <HashLink smooth to="/#contact" onClick={closeMenu}>Contact</HashLink>
+        <Link to="/IoTPage#iot" onClick={closeMenu}>
+          IoT Demo
+        </Link>
+      </nav>
 
-        <div
-          aria-expanded={isActive ? "true" : "false"}
-          aria-haspopup="true"
-          aria-label={isActive ? "Fechar menu" : "Abrir menu"}
-          className={isActive ? "menu active" : "menu"}
-          onClick={() => {
-            setActive(!isActive);
-          }}
-        ></div>
-      </Router>
+      <div
+        aria-expanded={isActive ? "true" : "false"}
+        aria-haspopup="true"
+        aria-label={isActive ? "Close menu" : "Open menu"}
+        className={isActive ? "menu active" : "menu"}
+        onClick={() => setActive(!isActive)}
+      ></div>
     </Container>
   );
 }

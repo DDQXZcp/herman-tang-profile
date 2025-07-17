@@ -1,22 +1,18 @@
-import React from 'react'
-// import { useEffect } from 'react'
-import { Footer } from './components/Footer/Footer'
-import { Header } from './components/Header/Header'
-import { Main } from './components/Main/Main'
-import { GlobalStyle } from './styles/global'
-import { Analytics } from "@vercel/analytics/react"
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Main } from "./components/Main/Main";
+import { IoTPage } from "./components/IoTPage/IoTPage";
+import { PageLayout } from "./components/PageLayout";
 
-import 'react-toastify/dist/ReactToastify.css'
 function App() {
   return (
-    <>
-      <GlobalStyle></GlobalStyle>
-      <Header></Header>
-      <Main></Main>
-      <Analytics />
-      <Footer></Footer>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<PageLayout><Main /></PageLayout>} />
+        <Route path="/IoTPage" element={<PageLayout><IoTPage /></PageLayout>} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

@@ -1,16 +1,39 @@
-# Portfolio of Vinayak Singh
+# Herman Tang Personal Website
 
-<img src ="https://github.com/CodeVinayak/CodeVinayak/blob/5920a79f4c5977332a67caf91125241cf0fc46b5/www.vinayaksingh.in.png" />
- 
-This project was created with CRA (Create React App)
+## Cloud Deployment:
+This static website is hosted on AWS. Centrally managing and versioning resources with [Cloudformation Template](./react-cors-spa-stack-v2.yaml).
+<p align="center">
+<img src ="./src/assets/AWS-Architecture.png" />
+</p>
 
-This is my portfolio website to introduce myself, here I put my skills, projects, and contact details.
+### Hosting Static Website
+- Cloudfront (Global Caching)
+- S3 (Host Static Website)
+### IoT Visualization
+- API Gateway (Handle WebSocket Connection)
+- Lambda (Handle WebSocket Request)
+- DynamoDB (Store User Session Info)
+- IoT Core (MQTT Broker)
+
+## Sections Included:
+- Personal Profile
+- Realtime IoT Visualization Demo
 
 ## Technologies used:
 - React
 - Typescript
 - Styled Components
+
+## Cloud Deployment:
+- React
  
-## To run this project:
+## Manually Run:
 - yarn install
 - yarn run start
+
+## Manually Build:
+- yarn build start
+
+## CI/CD Workflow
+The code will trigger the workflow to build and deploy this static website to my AWS S3 bucket. My AWS credentials are hidden in Github repository secrets.
+- [.github/workflows/deploy.yml](.github/workflows/deploy.yml)
