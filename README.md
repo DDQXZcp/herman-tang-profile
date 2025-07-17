@@ -1,11 +1,13 @@
 # Herman Tang Personal Website
 
+[Herman Tang Personal Website](https://www.herman-tang.com/)
+
 <p align="center">
 <img src ="./src/assets/website-capture-screen.png" />
 </p>
 
 ## Cloud Deployment
-This static website is hosted on AWS. Centrally managing and versioning resources with [Cloudformation Template](./react-cors-spa-stack-v2.yaml).
+This static website is hosted on AWS. Centrally managing and versioning resources with [Cloudformation Template](./react-cors-spa-stack-v2.yaml) IaC.
 <p align="center">
 <img src ="./src/assets/AWS-Architecture.png" />
 </p>
@@ -13,6 +15,7 @@ This static website is hosted on AWS. Centrally managing and versioning resource
 ### Hosting Static Website
 - Cloudfront (Global Caching)
 - S3 (Host Static Website)
+- Route 53
 ### IoT Visualization
 - API Gateway (Handle WebSocket Connection)
 - Lambda (Handle WebSocket Request)
