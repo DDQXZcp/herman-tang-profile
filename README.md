@@ -1,9 +1,8 @@
 # Herman Tang Personal Website
 
-[Herman Tang Personal Website](https://www.herman-tang.com/)
-
 <p align="center">
-<img src ="./src/assets/website-capture-screen.png" />
+    <img src ="./src/assets/website-capture-screen.png" />
+    <a href="https://www.herman-tang.com" target= "_blank">[Website Link]</a>
 </p>
 
 ## Cloud Deployment
@@ -15,7 +14,8 @@ This static website is hosted on AWS. Centrally managing and versioning resource
 ### Hosting Static Website
 - Cloudfront (Global Caching)
 - S3 (Host Static Website)
-- Route 53
+- Route 53 (Public Domain Registration)
+- ACM (TLS/SSL Certificate Management)
 ### IoT Visualization
 - API Gateway (Handle WebSocket Connection)
 - Lambda (Handle WebSocket Request)
