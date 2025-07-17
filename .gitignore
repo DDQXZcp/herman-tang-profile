@@ -10,6 +10,9 @@
 
 # production
 build/
+.github/workflows/checkov.yml
+.github/workflows/ci.yml 
+.github/workflows/codeql-analysis.yml 
 
 # misc
 .DS_Store

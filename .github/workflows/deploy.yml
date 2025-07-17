@@ -21,7 +21,7 @@ jobs:
         run: yarn install
 
       - name: Build the project
-        run: yarn build  # This creates the build/ folder in the runner
+        run: CI=false yarn build  # This creates the build/ folder in the runner
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
