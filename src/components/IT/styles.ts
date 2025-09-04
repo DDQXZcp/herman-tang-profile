@@ -34,6 +34,12 @@ export const Container = styled.section`
     z-index: 1;
   }
 
+  .left-column,
+  .right-column {
+    justify-self: start;   /* grid item alignment */
+    align-self: start;
+  }
+
   .hard-skills {
     margin-top: 1.6rem;
     display: flex;

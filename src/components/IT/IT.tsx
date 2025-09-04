@@ -9,6 +9,7 @@ import TechIcon from "../../assets/TechIcon.png";
 import CCNA from "../../assets/ccna.png"
 import RedHatIcon from "../../assets/redhat-icon.svg"
 import CiscoRack from "../../assets/CiscoRack.jpeg"
+import PacketTracer from "../../assets/PacketTracer.png"
 import React, { useState } from "react";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
@@ -64,8 +65,9 @@ export function IT() {
         </Fade>
       </div>
 
-      <div className="demo-image">
-        <img src={CiscoRack} alt="Cisco Rack" />
+      <div className="demo-image" style={{ justifySelf: "start", alignSelf: "start" }}>
+        <img src={CiscoRack} alt="Cisco Rack" style={{ maxHeight: "300px" }} />
+        <img src={PacketTracer} alt="Packet Tracer" style={{ maxHeight: "260px" }} />
       </div>
     </Container>
   );

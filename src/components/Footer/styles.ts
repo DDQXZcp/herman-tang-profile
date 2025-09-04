@@ -45,6 +45,8 @@ export const Container = styled.footer`
     letter-spacing: 0.1rem;
     font-weight: 500;
     max-width: 500px;
+    white-space: nowrap;
+    margin-left: 4rem;
   }
 
   a {
@@ -132,7 +134,7 @@ export const Container = styled.footer`
     }
   }
 
-  @media(max-width: 800px){
+  @media(max-width: 940px){
     padding: 4rem 10rem;
     flex-direction: column;
     gap: 2rem;

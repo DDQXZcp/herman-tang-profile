@@ -89,7 +89,7 @@ export function About() {
           <PhotoAlbum5 />
         </div>
         <img
-          src={ACCESS} alt="ACCESS" style={{ width: "80%", height: "auto", borderRadius: "16px", display: "block", margin: "0 auto" }}
+          src={ACCESS} alt="ACCESS" style={{ width: "80%", height: "auto", borderRadius: "16px", display: "block", margin: "0 auto", maxHeight: "400px" }}
         />
       </div>
 
