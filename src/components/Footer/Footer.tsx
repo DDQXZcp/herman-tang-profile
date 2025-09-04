@@ -10,21 +10,13 @@ export function Footer() {
   return (
     <Container className="footer">
       <a className="logo">
-        <span className="acknowledgement-title">Acknowledgement</span>
-        <span className="acknowledgement-text">This profile page refers to the template</span>
-        <span className="acknowledgement-link">
-          <a href="https://github.com/CodeVinayak/Portfolio-v2" target="_blank" rel="noopener noreferrer">
-            https://github.com/CodeVinayak/Portfolio-v2
-          </a>
-        </span>
+        <h3>Acknowledgement</h3>
+        <p>This profile page refers to the template</p>
+        <a href="https://github.com/CodeVinayak/Portfolio-v2" target="_blank" rel="noreferrer" className="brand-link">
+            Vinayak Portfolio
+        </a>
       </a>
-      <div>
-        <p>
-          This Website was made with <img src={reactIcon} alt="React" />
-          {/* <span>❤️</span> */}
-        </p>
-      </div>
-      <div className="social-media">
+      {/* <div className="social-media">
         <a
           href="https://www.linkedin.com/in/herman-tang/"
           target="_blank"
@@ -39,7 +31,8 @@ export function Footer() {
         >
           <img src={githubIcon} alt="GitHub" />
         </a>
-      </div>
+      </div> */}
+      <p>@ <span className="highlight">Herman Tang</span> 2025 all rights reserved</p>
     </Container>
   )
 }

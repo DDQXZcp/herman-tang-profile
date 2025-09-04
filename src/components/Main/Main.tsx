@@ -4,6 +4,7 @@ import { About } from "../About/About";
 import { Contact } from "../Contact/Contact";
 import { Project } from "../Project/Project";
 import { Architecture } from "../Architecture/Architecture";
+import {IT} from "../IT/IT"
 import { CSIRO } from "../CSIRO/CSIRO";
 import { useEffect } from "react";
 import {AnuTutor} from "../AnuTutor/AnuTutor"
@@ -47,12 +48,14 @@ export function Main() {
     <Container>
       <>
         <Hero />
-        <About />
+        {/* <About /> */}
         <Architecture />
         <CSIRO />
-        <AnuTutor />
-        <Project />
-        <Contact />
+        <IT />
+        {/* <AnuTutor /> */}
+        <About />
+        {/* <Project /> */}
+        {/* <Contact /> */}
       </>
     </Container>
   );

@@ -5,7 +5,7 @@ export const Container = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.8rem 10rem;
+  padding: 1.8rem 8rem;
   
   background-color: #21212150;
   
@@ -146,6 +146,36 @@ export const Container = styled.header`
     transform: translateX(-100%);
   }
 
+    /* hidden by default on desktop */
+  .menu-top {
+    display: none;
+  }
+
+  /* mobile / opened menu */
+  @media (max-width: 960px) {
+    nav.active .menu-top {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding-top: 16px;
+      margin-bottom: 12px;
+      text-decoration: none;
+      color: #fff; /* keep link text white */
+    }
+
+    nav .mini-hero-image {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      border: 2px solid rgba(255,255,255,0.15);
+    }
+  }
+
+    
+
   @media (max-width: 960px){
     padding: 1.8rem 3rem;
 
@@ -169,7 +199,7 @@ export const Container = styled.header`
       top: 0;
       left: 0;
       transition: opacity 0.25s;
-      background-color: var(--green);
+      background-color: rgba(33, 34, 39, 0.9);
 
       a.button{
         background-color: var(--pink);

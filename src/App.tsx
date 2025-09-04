@@ -9,7 +9,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<PageLayout><Main /></PageLayout>} />
-        <Route path="/IoTPage" element={<PageLayout><IoTPage /></PageLayout>} />
+        {/* <Route path="/IoTPage" element={<PageLayout><IoTPage /></PageLayout>} /> */}
       </Routes>
     </BrowserRouter>
   );

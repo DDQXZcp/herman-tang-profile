@@ -7,22 +7,26 @@ export const GlobalStyle = createGlobalStyle`
     --green: #23ce6b;
     --blue: #016fb9;
     --white: #FFFFFF;
-    --CsiroBlue #00AEEF;
-    --AnuGold #B68D40;
-    --IeeeBlue #062D4F;
+    --CsiroBlue: #00AEEF;
+    --AnuGold: #B68D40;
+    --accent-yellow: #FFC107;
+    --IeeeBlue: #062D4F;
+    --BackendGreen: #004438;
+    --DockerBlue: #1D63ED;
+    --MySqlOrange: #E48E00;
     scroll-padding-top: 10rem;
   }
 
   /* ✅ Add Highlight */
   .highlight {
-    color: var(--AnuGold);
+    color: var(--accent-yellow);
     font-weight: bold;
   }
 
     /* ✅ Add Transparent White Circle */
   .icon-wrapper {
-    width: 14rem; /* ✅ Slightly larger than icon */
-    height: 14rem; /* ✅ Creates circular effect */
+    width: 10rem; /* ✅ Slightly larger than icon */
+    height: 10rem; /* ✅ Creates circular effect */
     background: rgba(255, 255, 255, 1); /* ✅ Semi-transparent white */
     border-radius: 50%; /* ✅ Makes it a circle */
     display: flex;
@@ -32,7 +36,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .icon-wrapper img {
-    width: 12rem; /* ✅ Keep icon size unchanged */
+    width: 8rem; /* ✅ Keep icon size unchanged */
     height: auto;
   }
 
@@ -67,6 +71,13 @@ export const GlobalStyle = createGlobalStyle`
 
   a {
     text-decoration: none;
+  }
+
+  p {
+    font-size: 1.8rem;
+    letter-spacing: 0.1rem;
+    font-weight: 500;
+    max-width: 500px;
   }
 
   button, .button {

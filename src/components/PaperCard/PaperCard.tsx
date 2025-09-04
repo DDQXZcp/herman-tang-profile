@@ -3,12 +3,13 @@ import styled from "styled-components";
 const Card = styled.div`
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 16px;
+  padding: 16px 16px;
   max-width: 700px;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(5px);
   color: white;
-  margin: 20px auto;
+  margin: 10px auto;
+  margin-bottom: 0;
   text-align: center;
 
   h3 {
@@ -16,10 +17,12 @@ const Card = styled.div`
     margin-bottom: 8px;
     font-weight: bold;
     color: var(--CsiroBlue);
+    margin-top: 0px
   }
 
   p {
-    font-size: 1.4rem;
+    margin-top: 6px;
+    font-size: 1.6rem;
     line-height: 1.4;
   }
 

@@ -2,12 +2,58 @@ import styled from "styled-components";
 
 
 export const Container = styled.footer`
-  background-color: #2b2b2b;
-  padding: 3rem 15rem;
-  margin-top: 10rem;
+  background: linear-gradient(
+      to bottom,
+      rgba(43, 43, 43, 0) 0%,        /* fully transparent at the very top */
+      rgba(43, 43, 43, 0.9) 10%,     /* fade in */
+      rgba(43, 43, 43, 0.9) 100%,     /* hold opacity in the middle */
+    );
+  padding: 3rem 10rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  h1,
+  h2,
+  h3 {
+    white-space: nowrap; /* prevents line break */
+  }
+
+  h1 {
+    display: inline-block;
+    margin-top: 2rem;
+    font-size: 2.4rem;
+  }
+
+  h2 {
+    display: inline-block;
+    margin-bottom: 0rem;
+    font-size: 1.2rem;
+    margin-top: 0rem;
+    color: var(--CsiroBlue);
+  }
+
+  h3 {
+    font-size: 2rem;
+    margin-top: 0rem;
+    color: var(--accent-yellow);
+  }
+
+  p {
+    margin-top: 0rem;
+    font-size: 1.6rem;
+    letter-spacing: 0.1rem;
+    font-weight: 500;
+    max-width: 500px;
+  }
+
+  a {
+    margin-top: 2rem;
+    font-size: 1.4rem;
+    letter-spacing: 0.1rem;
+    font-weight: 500;
+    max-width: 500px;
+  }
 
   .logo {
     display: flex;
@@ -54,6 +100,26 @@ export const Container = styled.footer`
       font-size: 3rem;
       width: 3rem;
     }
+  }
+
+  .brand-link {
+    margin: 0;
+    margin-top: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: var(--AnuGold);
+    text-decoration: none;
+    white-space: nowrap;
+    color: #fff;
+    transition: transform .15s ease, background .15s ease;
+  }
+
+  .brand-link:hover {
+    transform: translateY(-2px);
+    background: var(--IeeeBlue);
   }
 
 

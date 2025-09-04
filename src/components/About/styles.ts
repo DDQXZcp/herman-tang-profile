@@ -5,6 +5,53 @@ export const Container = styled.section`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
+  justify-content: center;
+  align-items: start;
+  padding: 4rem 0rem;
+
+  /* --- Full-width overlay just for this section --- */
+  position: relative;         /* create stacking context for the mask */
+  /* Mask stretches to viewport width, centered on the section */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 100vw;             /* cover the full viewport width */
+    transform: translateX(-50%);
+    background: linear-gradient(
+      to bottom,
+      rgba(33, 34, 39, 0) 0%,        /* fully transparent at the very top */
+      rgba(33, 34, 39, 0.9) 2%,     /* fade in */
+      rgba(33, 34, 39, 0.9) 98%,     /* hold opacity in the middle */
+      rgba(33, 34, 39, 0) 100%       /* fade out at bottom */
+    );
+    pointer-events: none;     /* do not block clicks */
+    z-index: 0;               /* behind content, above background */
+  }
+  /* ensure everything in the section is above the mask */
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .left-column,
+  .right-column {
+    justify-self: start;   /* grid item alignment */
+    align-self: start;
+  }
+
+  h1,
+  h2,
+  h3 {
+    white-space: nowrap; /* prevents line break */
+  }
+
+  .full-width {
+    grid-column: 1 / -1; /* spans across all columns */
+    text-align: center;
+  }
 
   .hard-skills {
     margin-top: 1.6rem;
@@ -18,28 +65,62 @@ export const Container = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    img {
+      width: 3.4rem;
+    }
   }
 
-  /* ✅ Add Transparent White Circle */
-  .icon-wrapper {
-    width: 14rem; /* ✅ Slightly larger than icon */
-    height: 14rem; /* ✅ Creates circular effect */
-    background: rgba(255, 255, 255, 1); /* ✅ Semi-transparent white */
-    border-radius: 50%; /* ✅ Makes it a circle */
+  .brand-bar {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* ✅ Optional: Adds a subtle shadow */
+    gap: 10px;
+    row-gap: 10px;     /* smaller vertical spacing */
+    margin-top: 10px;
+    flex-wrap: wrap;   /* <-- allow multiple rows */
+    max-width: 500px;
   }
 
-  .icon-wrapper img {
-    width: 12rem; /* ✅ Keep icon size unchanged */
-    height: auto;
+  .brand {
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: var(--AnuGold);
+    text-decoration: none;
+    white-space: nowrap;
+    color: #fff;
+    transition: transform .15s ease, background .15s ease;
   }
+
+  .brand img { width: 22px; height: 22px; }
+
+  .brand:hover {
+    transform: translateY(-2px);
+  }
+
+  .DegreeTitle{
+    display:flex;
+    align-items:center;      /* centers icon vs. both lines */
+    gap:12px;
+    margin:0;                /* optional: remove default h3 margin */
+    color:var(--white);
+    margin-top:1rem;
+  }
+  .DegreeTitle .lines{
+    display:flex;
+    flex-direction:column;   /* stack the two lines */
+    line-height:1.3;
+  }
+  .DegreeTitle .sub{
+    font-size:0.95em;
+  }
+
 
   h2 {
     display: inline-block;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-size: 3rem;
     margin-top: 0rem;
     color: var(--CsiroBlue);
@@ -47,70 +128,70 @@ export const Container = styled.section`
 
   h3 {
     margin-top: 2rem;
-    color: var(--CsiroBlue);
+    color: var(--accent-yellow);
   }
 
   p {
+    margin-top: 2rem;
     font-size: 1.8rem;
     letter-spacing: 0.1rem;
     font-weight: 500;
+    max-width: 540px;
   }
 
-  .about-image {
+  /* ✅ Ensure PaperCard is properly aligned */
+  .paper-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* ✅ Google Slides iframe styling */
+  .presentation {
+    width: 100%;
     text-align: center;
 
-    img {
-      margin-top: 2rem;
-      width: 75%;
-      filter: grayscale(0);
-      transition: filter 0.5s;
-
-      &:hover {
-        filter: grayscale(0);
-      }
-    }
-  }
-
-  @media only screen and (max-width: 480px) {
-    .about-image {
+    iframe {
       max-width: 100%;
-      margin-top: 4rem;
-
-      img {
-        margin-top: 2rem;
-        width: 100%;
-        filter: grayscale(0);
-        transition: filter 0.5s;
-
-        &:hover {
-          filter: grayscale(0);
-        }
-      }
+      height: 400px;
+      border: none;
     }
   }
 
-  @media (max-width: 960px) {
-    display: block;
+  .photo-album {
     text-align: center;
+    margin-top: -40px; /* ✅ Reduce spacing */
+    display: flex;
+    justify-content: center;
+    margin-bottom: -40px;
+  }
+
+  .left-column,
+  .right-column {
+    justify-self: start;   /* grid item alignment */
+    align-self: start;
+  }
+
+  /* ✅ Mobile-friendly adjustments */
+  @media only screen and (max-width: 1200px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     .hard-skills {
       justify-content: center;
     }
 
-    .about-image {
-      display: flex;
-      max-width: 100%;
+    .paper-card {
+      width: 100%;
+    }
 
-      img {
-        margin-top: 2rem;
-        width: 100%;
-        filter: grayscale(0);
-        transition: filter 0.5s;
+    .presentation {
+      width: 100%;
+    }
 
-        &:hover {
-          filter: grayscale(0);
-        }
-      }
+    .photo-album {
+      width: 100%;
     }
   }
 `;
