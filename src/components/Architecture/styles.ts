@@ -173,7 +173,11 @@ export const Container = styled.section`
   }
 
   /* Mobile-friendly adjustments */
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 600px) {
+
+    h1,h2,h3 {
+      white-space: normal; /* allow line break */
+    }
     .demo-image {
       max-width: 100%;
       margin-top: 4rem;

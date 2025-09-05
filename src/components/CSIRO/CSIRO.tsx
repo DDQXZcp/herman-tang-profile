@@ -20,7 +20,7 @@ export function CSIRO() {
       <div className="left-column">
         <div className="about-text">
           <Fade direction="left">
-            <h2>Integration with Computer Vision & AI</h2>
+            <h2>Computer Vision & AI</h2>
           </Fade>
           <div className="photo-album">
             <PhotoAlbum3 />
@@ -74,7 +74,7 @@ export function CSIRO() {
       {/* ✅ Right Column: Google Slides on top, Photo Album below */}
       <div className="right-column">
         <Fade direction="left">
-          <h2>Integration with Robotics</h2>
+          <h2>Robotics</h2>
           <div className="photo-album">
             <PhotoAlbum />
           </div>

@@ -203,6 +203,22 @@ export const Container = styled.section`
     }
   }
 
-  @media (max-width: 600px) { margin-top: 35%; }
-  @media (max-width: 480px) { margin-top: 45%; }
+  @media (max-width: 600px) {
+  /* no side padding; content touches the left edge */
+  padding: 12% 0 0;
+
+  /* if you want the section to span edge-to-edge even inside a padded parent */
+  /* width: 100vw;
+  margin-inline: 0;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw); */
+
+  /* allow headings to wrap so they don't force extra space */
+  .hero-text h1,
+  .hero-text h3 {
+    white-space: normal;
+  }
+
+  /* remove any inner left offsets */
+  .social-media { padding-left: 0; }
 `;

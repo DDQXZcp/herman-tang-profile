@@ -210,4 +210,9 @@ export const Container = styled.section`
       }
     }
   }
+  @media only screen and (max-width: 600px) {
+    h1,h2,h3 {
+      white-space: normal; /* allow line break */
+    }
+  }
 `;
